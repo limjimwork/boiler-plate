@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
 
-function LoginPage() {
+function LoginPage(props) {
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
@@ -22,7 +22,13 @@ function LoginPage() {
       password: password,
     };
 
-    dispatch(loginUser(postData));
+    dispatch(loginUser(postData)).then((res) => {
+      if (res.payload.loginSuccess) {
+        props.history.push("/");
+      } else {
+        alert("Error");
+      }
+    });
   };
 
   return (
